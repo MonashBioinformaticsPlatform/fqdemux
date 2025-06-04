@@ -3,11 +3,13 @@ include { FQTK } from './modules/local/fqtk/main'
 params.outdir = './results'
 params.readstructure_samplesheet = false
 params.barcodes_samplesheet = false
+params.strandedness = 'auto'
 
 process CREATE_SAMPLESHEET {
     input:
     val(demultiplexed_fastqs) // Flat list of fastq file paths
     val(baseDir)
+    val(strandedness)
 
     output:
     path('samplesheet.csv')
@@ -75,7 +77,7 @@ process CREATE_SAMPLESHEET {
                 final_r2_path = r2_path_obj ? r2_path_obj.toString() : ''
             }
 
-             csv_content += "${sample_name},${final_r1_path},${final_r2_path},auto\n"
+             csv_content += "${sample_name},${final_r1_path},${final_r2_path},${strandedness}\n"
         }
         // Optionally add logging here for cases where only R2 is found, which might indicate an issue
         // else if (r2_path) { log.warn "Found R2 without R1 for sample ${sample_name}: ${r2_path}" }
@@ -138,5 +140,6 @@ workflow {
 
     CREATE_SAMPLESHEET(
         ch_collected_fastqs, 
-        demuxed_basedir)
+        demuxed_basedir,
+        params.strandedness)
 }

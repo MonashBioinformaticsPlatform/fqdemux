@@ -38,6 +38,8 @@ Replace placeholders like `<path/to/pipeline>`, `<path/to/barcodes_samplesheet.t
     See the [`fqtk` documentation](https://github.com/fulcrumgenomics/fqtk) for more details on the read structure string format.
 *   `--outdir`: Path to the directory where output files will be saved. Defaults to `./results`.
 
+* `--strandedness` (Optional, default: 'auto') - set the strandedness column for the `samplesheet.csv` output ('auto', 'forward' or 'reverse'). 
+
 ## Output
 
 The pipeline will create the specified `--outdir` and place the following files inside:
